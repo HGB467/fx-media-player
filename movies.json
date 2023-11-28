@@ -1,0 +1,121 @@
+ [
+      {
+        "title": "Oppenheimer",
+        "Date":{
+          "day": 1,
+          "month": 1,
+          "year": 1
+        },
+        "description": "A dramatization of the life story of J. Robert Oppenheimer, the physicist who had a large hand in the development of the atomic bomb, thus helping end World War 2. We see his life from university days all the way to post-WW2, where his fame saw him embroiled in political machinations.",
+        "artists": [
+          {
+            "name":"Cillian Murphy",
+            "rating": 5
+          },
+          {
+            "name":"Robert Downy Jr.",
+            "rating": 5
+          }
+        ],
+        "poster_link": "https://pbs.twimg.com/media/FvUVt3hXgAAxP1H?format=jpg&name=900x900",
+        "genre": "Thriller",
+        "duration": 180,
+        "rating": 8,
+        "isRemote":true,
+        "playable_link":"",
+        "size": 2147483648,
+        "sampleRate": 90000,
+        "resolution": {
+          "width": 1280,
+           "height": 720
+        },
+        "codec": "h264",
+        "bitrate": 3500000,
+        "frameRate": 30,
+        "aspectRatio": {
+          "width": 16,
+          "height": 9
+        }
+      },
+      {
+        "title": "Avengers Endgame",
+        "Date":{
+          "day": 1,
+          "month": 1,
+          "year": 1
+        },
+        "description": "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos's actions and undo the chaos to the universe, no matter what consequences may be in store, and no matter who they face...",
+        "artists": [
+          {
+          "name":"Robert Downy Jr.",
+            "rating": 5
+        },
+          {
+            "name":"Chris Evans",
+            "rating": 5
+          },
+          {
+            "name":"Tom Hiddleston",
+            "rating": 5
+          }
+        ,
+          {
+            "name":"Chris Hemsworth",
+            "rating": 5
+          }
+],
+        "poster_link": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg",
+        "genre": "Action",
+        "duration": 181,
+        "rating": 7,
+        "isRemote":true,
+        "playable_link":"",
+        "size": 2147483648,
+        "sampleRate": 90000,
+        "resolution": {
+          "width": 1280,
+          "height": 720
+        },
+        "codec": "h264",
+        "bitrate": 3500000,
+        "frameRate": 30,
+        "aspectRatio": {
+          "width": 16,
+          "height": 9
+        }
+      },
+      {
+        "title": "Spider-Man: No Way Home",
+        "Date":{
+          "day": 1,
+          "month": 1,
+          "year": 1
+        },
+        "description": "With Spider-Man's identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man.",
+        "artists": [{
+          "name":"Tom Holland",
+          "rating": 5
+        }],
+        "poster_link": "https://m.media-amazon.com/images/I/81Fd1jD8DAL._AC_UF894,1000_QL80_.jpg",
+        "genre": "Action",
+        "duration": 148,
+        "rating": 6,
+        "isRemote":true,
+        "playable_link":"",
+        "size": 2147483648,
+        "sampleRate": 90000,
+        "resolution": {
+          "width": 1280,
+          "height": 720
+        },
+        "codec": "h264",
+        "bitrate": 3500000,
+        "frameRate": 30,
+        "aspectRatio": {
+          "width": 16,
+          "height": 9
+        }
+      }
+    ]
+
+  

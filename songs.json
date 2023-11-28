@@ -1,0 +1,90 @@
+[
+  {
+    "title": "Oppenheimer",
+    "Date":{
+      "day": 1,
+      "month": 1,
+      "year": 1
+    },
+    "artists": [
+      {
+        "name":"Cillian Murphy",
+        "rating": 5
+      },
+      {
+        "name":"Robert Downy Jr.",
+        "rating": 5
+      }
+    ],
+    "poster_link": "https://pbs.twimg.com/media/FvUVt3hXgAAxP1H?format=jpg&name=900x900",
+    "genre": "Pop",
+    "duration": 180,
+    "rating": 8,
+    "isRemote":true,
+    "playable_link":"",
+    "size": 2147,
+    "sampleRate": 48000,
+    "codec": "mp3",
+    "bitrate": 1500000,
+    "channels": 2
+  },
+  {
+    "title": "Oppenheimer",
+    "Date":{
+      "day": 1,
+      "month": 1,
+      "year": 1
+    },
+    "artists": [
+      {
+        "name":"Cillian Murphy",
+        "rating": 5
+      },
+      {
+        "name":"Robert Downy Jr.",
+        "rating": 5
+      }
+    ],
+    "poster_link": "https://pbs.twimg.com/media/FvUVt3hXgAAxP1H?format=jpg&name=900x900",
+    "genre": "Pop",
+    "duration": 180,
+    "rating": 8,
+    "isRemote":true,
+    "playable_link":"",
+    "size": 2147,
+    "sampleRate": 48000,
+    "codec": "mp3",
+    "bitrate": 1500000,
+    "channels": 2
+  },
+  {
+    "title": "Oppenheimer",
+    "Date":{
+      "day": 1,
+      "month": 1,
+      "year": 1
+    },
+    "artists": [
+      {
+        "name":"Cillian Murphy",
+        "rating": 5
+      },
+      {
+        "name":"Robert Downy Jr.",
+        "rating": 5
+      }
+    ],
+    "poster_link": "https://pbs.twimg.com/media/FvUVt3hXgAAxP1H?format=jpg&name=900x900",
+    "genre": "Pop",
+    "duration": 180,
+    "rating": 8,
+    "isRemote":true,
+    "playable_link":"",
+    "size": 2147,
+    "sampleRate": 48000,
+    "codec": "mp3",
+    "bitrate": 1500000,
+    "channels": 2
+  }
+]
+
