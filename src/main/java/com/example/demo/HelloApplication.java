@@ -349,7 +349,7 @@ public class HelloApplication extends Application {
     private void displayPlayer(File file,Stage stage) throws MalformedURLException {
         VBox vbox = new VBox();
 
-        Media media = new Media("https://wmediasoup.watchblock.net/video/Runner.mp4");
+        Media media = new Media(file.toURI().toString());
 
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
