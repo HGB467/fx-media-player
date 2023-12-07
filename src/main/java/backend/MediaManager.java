@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MediaManager {
 
@@ -24,8 +25,10 @@ public class MediaManager {
     private void loadMovies(){
         JSONParser parser = new JSONParser();
         try {
-            FileReader movies = new FileReader("./movies.json");
+            FileReader movies = new FileReader("./assets/movies.json");
             JSONArray parsedMovies = (JSONArray) parser.parse(movies);
+
+            System.out.println(parsedMovies.size());
 
             for(int i=0;i<parsedMovies.size();i++){
              JSONObject movie = (JSONObject) parsedMovies.get(i);
@@ -48,7 +51,7 @@ public class MediaManager {
    private void loadSongs(){
         JSONParser parser = new JSONParser();
         try {
-            FileReader songs = new FileReader("./songs.json");
+            FileReader songs = new FileReader("./assets/songs.json");
             JSONArray parsedSong = (JSONArray) parser.parse(songs);
 
             for(int i=0;i<parsedSong.size();i++){
@@ -125,13 +128,6 @@ public class MediaManager {
     }
 
 
-// To Convert Minutes In Hours And Minutes Format, Will Be Used On Frontend
-//    public static String getDuration(Long Min){
-//        Long hours   = Min / 60;
-//        Long minutes = Min % 60;
-//
-//        return String.format("%d hrs %d mins",hours,minutes);
-//    }
 
     public static Date getReleaseDate(JSONObject date){
         Long day = (Long) date.get("day");
@@ -235,6 +231,7 @@ public class MediaManager {
 
     public ArrayList<Video> filterMoviesByGenre(String genre){
         ArrayList<Video> filteredMovies = new ArrayList<>();
+        System.out.println(storedMovies);
         for(Video movie: storedMovies){
             if(movie.getGenre().equalsIgnoreCase(genre)){
                 filteredMovies.add(movie);
@@ -255,8 +252,8 @@ public class MediaManager {
 
     public ArrayList<Video> searchMovies(String searchTerm){
         ArrayList<Video> searchedMovies = new ArrayList<>();
-        for(Video movie: searchedMovies){
-            if(movie.getName().contains(searchTerm) || movie.getArtist().contains(searchTerm) || movie.getDescription().contains(searchTerm)){
+        for(Video movie: storedMovies){
+            if(movie.getName().toLowerCase().contains(searchTerm.toLowerCase()) || movie.getDescription().toLowerCase().contains(searchTerm.toLowerCase())){
                 searchedMovies.add(movie);
             }
         }
@@ -265,8 +262,8 @@ public class MediaManager {
 
     public ArrayList<Audio> searchSongs(String searchTerm){
         ArrayList<Audio> searchedSongs = new ArrayList<>();
-        for(Audio audio: searchedSongs){
-            if(audio.getName().contains(searchTerm) || audio.getArtist().contains(searchTerm)){
+        for(Audio audio: storedSongs){
+            if(audio.getName().toLowerCase().contains(searchTerm.toLowerCase())){
                 searchedSongs.add(audio);
             }
         }
@@ -322,6 +319,46 @@ public class MediaManager {
         }
         return filteredSongs;
     }
+
+    public ArrayList<Video> sortMoviesByRating(){
+        ArrayList<Video> clonedArrayList = cloneVideosList(storedMovies);
+        Collections.sort(clonedArrayList);
+        ArrayList<Video> remoteVideos = new ArrayList<>();
+        for(Video vid:clonedArrayList){
+            if(vid.getLocation()==Location.ONLINE){
+                remoteVideos.add(vid);
+            }
+        }
+        return new ArrayList<Video>(remoteVideos.subList(1,5));
+    }
+
+    public static ArrayList<Video> cloneVideosList(ArrayList<Video> storedMovies){
+        ArrayList<Video> movies = new ArrayList<>();
+       for(Video movie:storedMovies){
+           movies.add(movie);
+       }
+       return  movies;
+    }
+
+    public ArrayList<Audio> sortSongsByRating(){
+        ArrayList<Audio> clonedArrayList = cloneSongsList(storedSongs);
+        Collections.sort(clonedArrayList);
+        ArrayList<Audio> remoteAudios = new ArrayList<>();
+        for(Audio aud:clonedArrayList){
+            if(aud.getLocation()==Location.ONLINE){
+                remoteAudios.add(aud);
+            }
+        }
+        return new ArrayList<>(remoteAudios.subList(1,5));
+    }
+
+    public static ArrayList<Audio> cloneSongsList(ArrayList<Audio> storedSongs){
+        ArrayList<Audio> songs = new ArrayList<>();
+        for(Audio song:storedSongs){
+            songs.add(song);
+        }
+        return songs;
+    }
     public void addMovie(Video video){
         storedMovies.add(video);
         addMovieToDB(video);
@@ -332,18 +369,38 @@ public class MediaManager {
         addSongToDB(audio);
     }
 
+    public ArrayList<Video> getLocalMovies(){
+        ArrayList<Video> localMovies = new ArrayList<>();
+        for(Video movie: storedMovies){
+            if(movie.getLocation()==Location.LOCAL){
+                localMovies.add(movie);
+            }
+        }
+        return localMovies;
+    }
+
+    public ArrayList<Audio> getLocalSongs(){
+        ArrayList<Audio> localSongs = new ArrayList<>();
+        for(Audio song: storedSongs){
+            if(song.getLocation()==Location.LOCAL){
+                localSongs.add(song);
+            }
+        }
+        return localSongs;
+    }
+
  private void addMovieToDB(Video video){
      JSONParser jsonParser = new JSONParser();
 
      try {
-         Object obj = jsonParser.parse(new FileReader("./movies.json"));
+         Object obj = jsonParser.parse(new FileReader("./assets/movies.json"));
          JSONArray jsonArray = (JSONArray)obj;
 
          JSONObject movie = movieToJSON(video);
 
          jsonArray.add(movie);
 
-         FileWriter file = new FileWriter("./movies.json");
+         FileWriter file = new FileWriter("./assets/movies.json");
          file.write(jsonArray.toJSONString());
          file.flush();
          file.close();
@@ -390,14 +447,14 @@ public class MediaManager {
         JSONParser jsonParser = new JSONParser();
 
         try {
-            Object obj = jsonParser.parse(new FileReader("./songs.json"));
+            Object obj = jsonParser.parse(new FileReader("./assets/songs.json"));
             JSONArray jsonArray = (JSONArray)obj;
 
             JSONObject song = songToJSON(audio);
 
             jsonArray.add(song);
 
-            FileWriter file = new FileWriter("./songs.json");
+            FileWriter file = new FileWriter("./assets/songs.json");
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();
@@ -447,7 +504,7 @@ public class MediaManager {
         JSONParser jsonParser = new JSONParser();
 
         try {
-            Object obj = jsonParser.parse(new FileReader("./movies.json"));
+            Object obj = jsonParser.parse(new FileReader("./assets/movies.json"));
             JSONArray jsonArray = (JSONArray)obj;
 
             for(int i=0;i<jsonArray.size();i++){
@@ -459,7 +516,7 @@ public class MediaManager {
             }
 
 
-            FileWriter file = new FileWriter("./movies.json");
+            FileWriter file = new FileWriter("./assets/movies.json");
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();
@@ -473,7 +530,7 @@ public class MediaManager {
         JSONParser jsonParser = new JSONParser();
 
         try {
-            Object obj = jsonParser.parse(new FileReader("./songs.json"));
+            Object obj = jsonParser.parse(new FileReader("./assets/songs.json"));
             JSONArray jsonArray = (JSONArray)obj;
 
             for(int i=0;i<jsonArray.size();i++){
@@ -485,7 +542,7 @@ public class MediaManager {
             }
 
 
-            FileWriter file = new FileWriter("./songs.json");
+            FileWriter file = new FileWriter("./assets/songs.json");
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();
@@ -494,8 +551,6 @@ public class MediaManager {
             System.out.println(e);
         }
     }
-
- //TODO: add storted by release date, add sorted by rating
 
 
 }

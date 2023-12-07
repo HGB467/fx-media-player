@@ -1,5 +1,6 @@
 package backend;
 
+import javafx.collections.ObservableList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserManager {
 
@@ -22,7 +24,7 @@ public class UserManager {
     private void loadUsers(){
         JSONParser parser = new JSONParser();
         try {
-            FileReader user = new FileReader("./users.json");
+            FileReader user = new FileReader("./assets/users.json");
             JSONArray parsedUser = (JSONArray) parser.parse(user);
 
             for(int i=0;i<parsedUser.size();i++){
@@ -72,11 +74,13 @@ public class UserManager {
 
     private Media getMedia(JSONObject media){
        String type = (String) media.get("type");
-       if(type=="video"){
+       if(type.equalsIgnoreCase("video")){
+           System.out.println("in video");
         Media mediaObj = MediaManager.getMovieFromJSON(media);
         return mediaObj;
        }
        else{
+           System.out.println("in audio");
            Media mediaObj = MediaManager.getSongFromJSON(media);
            return mediaObj;
        }
@@ -84,13 +88,14 @@ public class UserManager {
     }
 
 
-    public User Register(String username,String password) throws Exception {
+    public User Register(String username, String password, ObservableList<String> Interests) throws Exception {
         for(User user : users){
             if(user.getName().equalsIgnoreCase(username)){
                 throw new Exception("User Already Exists");
             }
         }
-        User user = new User(username,password);
+        ArrayList<String> interestsList = new ArrayList<>(Interests);
+        User user = new User(username,password,interestsList);
         addUser(user);
         return user;
     }
@@ -117,18 +122,29 @@ public class UserManager {
         JSONParser jsonParser = new JSONParser();
 
         try {
-            Object obj = jsonParser.parse(new FileReader("./users.json"));
+            Object obj = jsonParser.parse(new FileReader("./assets/users.json"));
             JSONArray jsonArray = (JSONArray)obj;
 
             JSONObject userObj = new JSONObject();
             userObj.put("name", user.getName());
             userObj.put("password",user.getPassword());
+
+            if(user.getInterests().size()==0){
             userObj.put("interests",new JSONArray());
+            }
+            else{
+                JSONArray interestsArr = new JSONArray();
+                for(String interest : user.getInterests()){
+                    interestsArr.add(interest);
+                }
+                userObj.put("interests",interestsArr);
+            }
+
             userObj.put("watchlist",new JSONArray());
 
             jsonArray.add(userObj);
 
-            FileWriter file = new FileWriter("./users.json");
+            FileWriter file = new FileWriter("./assets/users.json");
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();

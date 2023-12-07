@@ -2,7 +2,7 @@ package backend;
 
 import java.util.ArrayList;
 
-public class Audio extends Media {
+public class Audio extends Media implements Comparable {
     private int channels;
 
     public Audio(String name, Date releaseDate , Location location , int duration, String posterLink, Long Size, Boolean isPlaying, int sampleRate, int bitrate, String codec, ArrayList<Artist> artist, String genre,int channels,int rating,String playableLink) {
@@ -16,6 +16,11 @@ public class Audio extends Media {
 
     public void setChannels(int channels) {
         this.channels = channels;
+    }
+
+    public int compareTo(Object o){
+        int compareRating = ((Audio)o).getRating();
+        return compareRating-this.getRating();
     }
 
     @Override

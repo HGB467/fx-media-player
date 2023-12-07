@@ -2,7 +2,7 @@ package backend;
 
 import java.util.ArrayList;
 
-public class Video extends Media{
+public class Video extends Media implements Comparable{
 
     private AspectRatio AspectRatio;
     private int frameRate;
@@ -46,8 +46,8 @@ public class Video extends Media{
 
     @Override
     public String toString() {
-        return "Video [AspectRatio=" + AspectRatio + ", frameRate=" + frameRate + ", bitrate=" + ", codec="
-                + ", resolution=" + resolution + "]";
+        return "Video [AspectRatio=" + AspectRatio + ", frameRate=" + frameRate + " Rating= "+ super.getRating()+
+                 ", resolution=" + resolution + "]";
     }
 
 
@@ -59,10 +59,9 @@ public class Video extends Media{
         this.description = description;
     }
 
-    //Implement Sorting
-//    @Override
-//    public int compareTo(Video video) {
-//        return getDateTime().compareTo(o.getDateTime());
-//    }
+    public int compareTo(Object o){
+        int compareRating = ((Video)o).getRating();
+        return compareRating-this.getRating();
+    }
 
 }

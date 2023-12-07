@@ -3,6 +3,7 @@ module com.example.demo {
     requires javafx.fxml;
     requires json.simple;
     requires javafx.media;
+    requires org.controlsfx.controls;
 
 
     opens com.example.demo to javafx.fxml;

@@ -27,11 +27,18 @@ public class User {
         this.watchList = new ArrayList<>();
     }
 
-    public User(String name, String password,ArrayList<String> interests,ArrayList<Media> watchList) {
+    public User(String name, String password,ArrayList<String> interests,ArrayList<Media> watchlist) {
         this.name = name;
         this.password = password;
         this.interests = interests;
-        this.watchList = watchList;
+        this.watchList = watchlist;
+    }
+
+    public User(String name, String password,ArrayList<String> interests) {
+        this.name = name;
+        this.password = password;
+        this.interests = interests;
+        this.watchList = new ArrayList<>();
     }
 
 
@@ -64,7 +71,7 @@ public class User {
         JSONParser jsonParser = new JSONParser();
 
         try {
-            Object obj = jsonParser.parse(new FileReader("./users.json"));
+            Object obj = jsonParser.parse(new FileReader("./assets/users.json"));
             JSONArray jsonArray = (JSONArray)obj;
 
             for(int i=0;i<jsonArray.size();i++){
@@ -78,7 +85,7 @@ public class User {
             }
 
 
-            FileWriter file = new FileWriter("./users.json");
+            FileWriter file = new FileWriter("./assets/users.json");
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();
@@ -98,11 +105,56 @@ public void addToWatchlist(Media media){
    addMediaToDB(media);
 }
 
+public void removeFromWatchlist(Media media){
+        for(int i=0;i<watchList.size();i++){
+            if(watchList.get(i).getName().equalsIgnoreCase(media.getName())){
+                watchList.remove(i);
+                break;
+            }
+        }
+        removeMediaFromDB(media);
+}
+
+    private void removeMediaFromDB(Media media){
+        JSONParser jsonParser = new JSONParser();
+
+        try {
+            Object obj = jsonParser.parse(new FileReader("./assets/users.json"));
+            JSONArray jsonArray = (JSONArray)obj;
+
+            for(int i=0;i<jsonArray.size();i++){
+                JSONObject tempobj = (JSONObject) jsonArray.get(i);
+                if(this.getName().equalsIgnoreCase((String) tempobj.get("name"))){
+                    JSONArray watchlistArray = (JSONArray) tempobj.get("watchlist");
+                    for(int j=0;j<jsonArray.size();j++){
+                        JSONObject tempwatchlistobj = (JSONObject) watchlistArray.get(j);
+                        if(media.getName().equalsIgnoreCase((String) tempwatchlistobj.get("title"))){
+                            System.out.println("object matched"+j);
+                            watchlistArray.remove(j);
+                            break;
+                        }
+
+                    }
+                }
+
+            }
+
+
+            FileWriter file = new FileWriter("./assets/users.json");
+            file.write(jsonArray.toJSONString());
+            file.flush();
+            file.close();
+
+        } catch (ParseException | IOException e) {
+            System.out.println(e);
+        }
+    }
+
 private void addMediaToDB(Media media){
     JSONParser jsonParser = new JSONParser();
 
     try {
-        Object obj = jsonParser.parse(new FileReader("./users.json"));
+        Object obj = jsonParser.parse(new FileReader("./assets/users.json"));
         JSONArray jsonArray = (JSONArray)obj;
 
         for(int i=0;i<jsonArray.size();i++){
@@ -125,7 +177,7 @@ private void addMediaToDB(Media media){
         }
 
 
-        FileWriter file = new FileWriter("./users.json");
+        FileWriter file = new FileWriter("./assets/users.json");
         file.write(jsonArray.toJSONString());
         file.flush();
         file.close();
