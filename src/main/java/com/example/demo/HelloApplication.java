@@ -1680,6 +1680,16 @@ public class HelloApplication extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(15);
 
+        Image spinner = new Image("file:spinner.gif");
+
+        ImageView spinnerView = new ImageView(spinner);
+        spinnerView.setFitWidth(stage.getWidth());
+        spinnerView.setFitHeight(0.8*stage.getHeight());
+        spinnerView.setPreserveRatio(true);
+        spinnerView.setCache(true);
+
+        vbox.getChildren().add(spinnerView);
+
 
         Media media = new Media(url);
 
@@ -1688,6 +1698,7 @@ public class HelloApplication extends Application {
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
 
+        MediaView mediaViewCopy = null;
 
         if(medi instanceof Audio){
             HBox imageCont = new HBox();
@@ -1717,7 +1728,6 @@ public class HelloApplication extends Application {
             mediaView.setFitWidth(stage.getWidth());
             mediaView.setPreserveRatio(true);
 
-            vbox.getChildren().add(mediaView);
 
             stage.widthProperty().addListener((obs, oldVal, newVal) -> {
                 mediaView.setFitWidth(stage.getWidth());
@@ -1727,13 +1737,20 @@ public class HelloApplication extends Application {
                 mediaView.setFitHeight(stage.getHeight());
 
             });
+
+            mediaViewCopy = mediaView;
         }
 
 
-
+        MediaView finalMediaViewCopy = mediaViewCopy;
         mediaPlayer.setOnReady(new Runnable() {
             @Override
             public void run() {
+                vbox.getChildren().remove(spinnerView);
+                if(finalMediaViewCopy!=null){
+                    vbox.getChildren().add(finalMediaViewCopy);
+                }
+
                 BorderPane controls = createControls(mediaPlayer,stage);
 
                 BorderPane durationCont = new BorderPane();
